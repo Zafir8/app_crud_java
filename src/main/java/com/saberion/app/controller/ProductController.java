@@ -27,7 +27,12 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable Integer id) {
+        Product product = productService.getProductById(id);
+        return ResponseEntity.ok(product);
+    }
+
     @PostMapping
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
         Product createdProduct = productService.createProduct(product);
@@ -40,14 +45,12 @@ public class ProductController {
         return ResponseEntity.ok(products);
     }
 
-    
     @GetMapping("/search")
     public ResponseEntity<List<Product>> searchProducts(@RequestParam String code, @RequestParam String name) {
         List<Product> products = productService.searchProducts(code, name);
         return ResponseEntity.ok(products);
     }
 
-    
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable Integer id, @RequestBody Product product) {
         product.setId(id);
@@ -55,7 +58,6 @@ public class ProductController {
         return ResponseEntity.ok(updatedProduct);
     }
 
-    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Integer id) {
         productService.deleteProduct(id);

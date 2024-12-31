@@ -16,27 +16,28 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    
+    public Product getProductById(Integer id) {
+        
+        return productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+    }
+
     public Product createProduct(Product product) {
         return productRepository.save(product);
     }
 
-   
     public Page<Product> getProducts(Pageable pageable) {
         return productRepository.findAll(pageable);
     }
-
 
     public List<Product> searchProducts(String code, String name) {
         return productRepository.findByCodeContainingOrNameContaining(code, name);
     }
 
-    
     public Product updateProduct(Product product) {
         return productRepository.save(product);
     }
 
-    
     public void deleteProduct(Integer productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
