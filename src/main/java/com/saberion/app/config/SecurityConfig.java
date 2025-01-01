@@ -16,13 +16,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
-            .authorizeHttpRequests()
-            .requestMatchers("/api/auth/**", "/api/users/register").permitAll()
-            .requestMatchers("/api/products/**").hasAnyRole("ADMIN", "MODERATOR")
-            .requestMatchers("/api/users/**").hasRole("ADMIN")
-            .anyRequest().authenticated()
-            .and()
-            .httpBasic();
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/**", "/api/users/register").permitAll()
+                        .requestMatchers("/api/products").permitAll()
+                        .requestMatchers("/api/users/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .httpBasic();
         return http.build();
     }
 
@@ -32,7 +32,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, JwtUtil jwtUtil)
+    public AuthenticationManager authenticationManager(HttpSecurity http)
             throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class).build();
     }

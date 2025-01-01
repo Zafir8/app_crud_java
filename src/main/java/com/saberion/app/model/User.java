@@ -25,7 +25,7 @@ public class User {
     @Column(nullable = false, unique = true, length = 100)
     private String email;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 100)
     private String password;
 
     @Column(nullable = false, length = 20)
@@ -54,8 +54,8 @@ public class User {
     }
 
     public enum Role {
-        ADMIN,
-        MODERATOR
+        ROLE_ADMIN,
+        ROLE_MODERATOR
     }
 
     

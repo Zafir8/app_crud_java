@@ -44,4 +44,6 @@ public class ProductService {
         product.setDeletedAt(java.time.LocalDateTime.now());
         productRepository.save(product);
     }
+
+    
 }

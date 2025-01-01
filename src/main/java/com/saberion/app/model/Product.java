@@ -185,7 +185,11 @@ public class Product {
         return attributes;
     }
 
+
     public void setAttributes(List<Attribute> attributes) {
         this.attributes = attributes;
+        if (attributes != null) {
+            attributes.forEach(attribute -> attribute.setProduct(this));
+        }
     }
 }
